@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class BankingAppGUI extends JFrame {
 
@@ -39,6 +41,8 @@ public class BankingAppGUI extends JFrame {
     private JTextField transferAmountField;
     private JButton transferButton;
     private JTextArea transactionLog;
+    private JLabel clockLabel;
+    private Thread clockThread;
 
     public BankingAppGUI(User user) {
         this.loggedInUser = user;
@@ -87,6 +91,11 @@ public class BankingAppGUI extends JFrame {
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 22));
         welcomeLabel.setForeground(Color.WHITE);
 
+        clockLabel = new JLabel();
+        clockLabel.setFont(new Font("Consolas", Font.BOLD, 20));
+        clockLabel.setForeground(Color.WHITE);
+        clockLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
         logoutButton = new JButton("Logout");
         logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
         logoutButton.setBackground(new Color(211, 47, 47));
@@ -98,9 +107,39 @@ public class BankingAppGUI extends JFrame {
         logoutButton.addActionListener(e -> performLogout());
 
         topPanel.add(welcomeLabel, BorderLayout.WEST);
+        topPanel.add(clockLabel, BorderLayout.CENTER);
         topPanel.add(logoutButton, BorderLayout.EAST);
 
         add(topPanel, BorderLayout.NORTH);
+
+        // Start the clock thread
+        startClock();
+    }
+
+    private void startClock() {
+        clockThread = new Thread(() -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    LocalDateTime now = LocalDateTime.now();
+                    String timeString = now.format(formatter);
+
+                    SwingUtilities.invokeLater(() -> {
+                        clockLabel.setText(timeString + " PST");
+                    });
+
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }
+        );
+
+        clockThread.setDaemon(true);
+        clockThread.start();
     }
 
     private void performLogout() {
@@ -240,8 +279,8 @@ public class BankingAppGUI extends JFrame {
         amountField = new JTextField(10);
         amountField.setFont(new Font("Arial", Font.PLAIN, 14));
         amountField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 189, 189), 1),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+                BorderFactory.createLineBorder(new Color(189, 189, 189), 1),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)
         ));
 
         depositButton = new JButton("Deposit");
@@ -276,7 +315,7 @@ public class BankingAppGUI extends JFrame {
 
         JPanel specialOpsPanel = new JPanel(new GridLayout(2, 1, 5, 8));
         specialOpsPanel.setBackground(Color.WHITE);
-        
+
         addInterestButton = new JButton("Add Interest (Saving)");
         deductFeesButton = new JButton("Deduct Fees (Checking)");
 
@@ -553,8 +592,8 @@ public class BankingAppGUI extends JFrame {
         transferAmountField = new JTextField(10);
         transferAmountField.setFont(new Font("Arial", Font.PLAIN, 14));
         transferAmountField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 189, 189), 1),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+                BorderFactory.createLineBorder(new Color(189, 189, 189), 1),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)
         ));
 
         transferButton = new JButton("Transfer");

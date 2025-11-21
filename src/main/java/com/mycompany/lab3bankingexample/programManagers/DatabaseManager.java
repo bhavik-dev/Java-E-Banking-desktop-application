@@ -10,7 +10,7 @@ public class DatabaseManager {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/banking_db?createDatabaseIfNotExist=true";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root"; 
+    private static final String DB_PASSWORD = "root";
     private static Connection connection;
 
     public static Connection getConnection() throws SQLException {
@@ -150,8 +150,8 @@ public class DatabaseManager {
         }
     }
 
-    private static void insertAccount(Connection conn, int customerId, String accountType, 
-                                     Double balance, Double interestRate, int transactionCount) throws SQLException {
+    private static void insertAccount(Connection conn, int customerId, String accountType,
+            Double balance, Double interestRate, int transactionCount) throws SQLException {
         String sql = "INSERT INTO accounts (customer_id, account_type, balance, interest_rate, transaction_count) "
                 + "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -15,3 +15,11 @@ thread 1 --> database --> free
 thread 2 --> database --> free
 
 thread 1 <--> thread 2
+
+
+
+    Main thread -> public static void main(){} 
+
+    thread 1
+    thread 2
+    ...
