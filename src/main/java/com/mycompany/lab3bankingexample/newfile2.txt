@@ -1,0 +1,19 @@
+We will implement the login functionality
+
+1. user details - model
+customerName
+username
+passward
+
+
+2. login page - GUI
+usename
+passward
+login button 
+exit button
+
+
+
+implement in database
+implement the multithreading
+

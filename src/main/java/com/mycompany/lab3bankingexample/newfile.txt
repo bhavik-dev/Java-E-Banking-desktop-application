@@ -1,0 +1,17 @@
+Multithreading in Java
+
+CPU --- physical component that provide procession power to execute programs
+core --- number of task that can perform simultaneously
+program --- a set of instructions to perform
+process --- it is multiple process instance of that program
+Thread --- smallest unit of execution within the process
+Multitasking ---
+Multithreading --- ability to execute multiple thread within a single process concurrently
+
+
+CPU --> Core --> program/task --> process --> Threads
+
+thread 1 --> database --> free
+thread 2 --> database --> free
+
+thread 1 <--> thread 2

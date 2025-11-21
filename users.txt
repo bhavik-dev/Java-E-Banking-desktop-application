@@ -1,0 +1,5 @@
+michael|password123|Michael Brown
+sophia|password123|Sophia Davis
+emma|password123|Emma Johnson
+william|password123|William Wilson
+john|password123|John Smith
